@@ -130,6 +130,12 @@ On Fedora, for example, it is sufficient to install the dependencies using a sin
 sudo dnf install libmpc-devel gtk2-devel mpfr-devel gcc gcc-c++
 ```
 
+Additionally, the valgrind test mode requires `valgrind`. On Fedora, we can install it via
+
+```bash
+sudo dnf install valgrind
+```
+
 Currently the `run-tests` script is written in Perl. So you may also need to install `perl` if your
 system does not have it already. For example, on Fedora, we can do
 
