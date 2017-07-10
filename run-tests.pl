@@ -23,16 +23,25 @@ if ($valgrind) {
 
 my $luajit_inc = "$luajit_prefix/include/luajit-2.1";
 
+my $failures = 0;
+
 sub shell {
-	system("@_") == 0
-		or die "cannot run command @_: $?";
+	my ($cmd, $test) = @_;
+	if (system("@_") != 0) {
+		if ($test) {
+			warn "\e[31mFailed test when running @_: $?\e[0m\n";
+			$failures++;
+		} else {
+			die "cannot run command @_: $?\n";
+        }
+	}
 }
 
 sub wanted {
 	return unless -f $_ && /\.lua$/;
 	return if $_ eq 'ffi_arith_int64.lua';
 	warn "=== $File::Find::name\n";
-	shell("$luajit $_");
+	shell("$luajit $_", 1);
 }
 
 shell "cd test/clib && rm -f ctest && gcc -O -g -o ctest -fpic -shared -I $luajit_inc ctest.c";
@@ -54,4 +63,8 @@ $ENV{CDEFS} = $cdefs;
 find({ wanted => \&wanted }, 'test');
 #find({ wanted => \&wanted }, 'bench');
 
-print "All tests successful.\n";
+if ($failures) {
+    print "\e[31m$failures tests failed.\e[0m\n";
+} else {
+    print "\e[32mAll tests successful.\e[0m\n";
+}
