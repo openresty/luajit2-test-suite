@@ -151,6 +151,7 @@ TODO
 ====
 
 * Run the benchmark scripts as well.
+* Integrate as many tests as possible from ROC-Lua 5.1, 5.2, and 5.3.
 
 [Back to TOC](#table-of-contents)
 
