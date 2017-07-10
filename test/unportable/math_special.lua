@@ -37,8 +37,8 @@ for j=1,#inp do
 end
 
 check(math.abs, "+0 +0 +0.5 +0.5 +1 +1 +inf +inf nan")
-check(math.floor, "+0 -0 +0 -1 +1 -1 +inf -inf nan")
-check(math.ceil, "+0 -0 +1 -0 +1 -1 +inf -inf nan")
+check(math.floor, "+0 +0 +0 -1 +1 -1 +inf -inf nan")
+check(math.ceil, "+0 +0 +1 +0 +1 -1 +inf -inf nan")
 check(math.sqrt, "+0 -0 +0.70711 nan +1 nan +inf nan nan")
 check(math.sin, "+0 -0 +0.47943 -0.47943 +0.84147 -0.84147 nan nan nan")
 check(math.cos, "+1 +1 +0.87758 +0.87758 +0.5403 +0.5403 nan nan nan")

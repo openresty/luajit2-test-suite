@@ -22,9 +22,9 @@ if os.getenv("LUA52") then
   check(table, "concat:foreach:foreachi:getn:insert:maxn:pack:remove:sort:unpack")
 else
   check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
-  check(math, "abs:acos:asin:atan:atan2:ceil:cos:cosh:deg:exp:floor:fmod:frexp:huge:ldexp:log:log10:max:min:mod:modf:pi:pow:rad:random:randomseed:sin:sinh:sqrt:tan:tanh")
-  check(string, "byte:char:dump:find:format:gfind:gmatch:gsub:len:lower:match:rep:reverse:sub:upper")
-  check(table, "concat:foreach:foreachi:getn:insert:maxn:remove:sort")
+  check(math, "abs:acos:asin:atan:atan2:ceil:cos:cosh:deg:exp:floor:fmod:frexp:huge:ldexp:log:log10:max:min:modf:pi:pow:rad:random:randomseed:sin:sinh:sqrt:tan:tanh")
+  check(string, "byte:char:dump:find:format:gmatch:gsub:len:lower:match:rep:reverse:sub:upper")
+  check(table, "concat:foreach:foreachi:getn:insert:maxn:move:remove:sort")
 end
 
 check(io, "close:flush:input:lines:open:output:popen:read:stderr:stdin:stdout:tmpfile:type:write")
