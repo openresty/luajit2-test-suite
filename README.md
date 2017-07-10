@@ -1,6 +1,40 @@
-********************************************
-** THIS IS NOT THE TEST SUITE FOR LUAJIT! **
-********************************************
+Name
+====
+
+luajit2-test-suite - OpenResty's branch of Mike Pall's LuaJIT test suite.
+
+Table of Contents
+=================
+
+* [Name](#name)
+* [Synopsis](#synopsis)
+* [Prerequisites](#prerequisites)
+* [Original Notes](#original-notes)
+
+Synopsis
+=========
+
+```bash
+# run the test suite in normal test mode with the luajit installed under /opt/luajit21/
+./run-tests.pl /opt/luajit21
+
+# run the test suite in valgrind test mode with luajit installed under /opt/luajit21sysm/
+./run-tests.pl /opt/luajit21sysm 1
+```
+
+Prerequisites
+=============
+
+This LuaJIT test suite requires some 3rd-party libraries like GTK 2.0, libmpc, mpfr, and C/C++ compilers.
+
+On Fedora, for example, it is sufficient to install the dependencies using a single command:
+
+```bash
+sudo dnf install libmpc-devel gtk2-devel mpfr-devel gcc gcc-c++
+```
+
+Original Notes
+==============
 
 In fact it doesn't even have the steps to build it or run it,
 so please don't complain.
@@ -74,4 +108,6 @@ removed, please open an issue.
 There are some benchmarks that bear other copyrights, probably public
 domain, BSD or MIT licensed. If the status cannot be determined, they
 need to be replaced or removed before merging with the LuaJIT repo.
+
+[Back to TOC](#table-of-contents)
 
