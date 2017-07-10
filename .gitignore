@@ -1,0 +1,7 @@
+*~
+*.swp
+*.swo
+*.bak
+*.tar.gz
+test/clib/cpptest
+test/clib/ctest
