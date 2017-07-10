@@ -65,6 +65,7 @@ find({ wanted => \&wanted }, 'test');
 
 if ($failures) {
     print "\e[31m$failures tests failed.\e[0m\n";
+    exit 1;
 } else {
     print "\e[32mAll tests successful.\e[0m\n";
 }

@@ -16,16 +16,93 @@ Synopsis
 
 ```bash
 # run the test suite in normal test mode with the luajit installed under /opt/luajit21/
-./run-tests.pl /opt/luajit21
+./run-tests /opt/luajit21
 
 # run the test suite in valgrind test mode with luajit installed under /opt/luajit21sysm/
-./run-tests.pl /opt/luajit21sysm 1
+./run-tests /opt/luajit21sysm 1
 ```
 
 When all the tests are passing, the output should look like this:
 
 ```
+=== test/unportable/math_special.lua
+=== test/misc/hook_norecord.lua
+=== test/misc/hook_record.lua
+=== test/misc/snap_top2.lua
+=== test/misc/strcmp.lua
+=== test/misc/string_dump.lua
+=== test/misc/tonumber_scan.lua
+=== test/misc/api_call.lua
+=== test/misc/stackovc.lua
+=== test/misc/debug_gc.lua
+=== test/misc/stackov.lua
+=== test/misc/table_insert.lua
+=== test/misc/uclo.lua
+=== test/misc/meta_cat.lua
+...
+=== test/ffi/ffi_jit_misc.lua
+=== test/ffi/ffi_call.lua
+=== test/ffi/ffi_jit_struct.lua
+=== test/ffi/ffi_arith_ptr.lua
+=== test/ffi/ffi_callback.lua
+=== test/ffi/ffi_metatype.lua
+=== test/ffi/ffi_jit_conv.lua
+=== test/ffi/ffi_jit_complex.lua
+=== test/ffi/ffi_jit_arith.lua
+=== test/ffi/ffi_copy_fill.lua
+=== test/ffi/ffi_jit_call.lua
+=== test/ffi/ffi_tabov.lua
+All tests successful.
 ```
+
+And the whole command will also return the exit code 0 to indicate success.
+
+Failed tests can lead to output like below:
+
+```
+=== test/ffi/ffi_type_punning.lua
+/opt/luajit21/bin/luajit: ffi_type_punning.lua:57: assertion failed!
+stack traceback:
+	[C]: in function 'assert'
+	ffi_type_punning.lua:57: in main chunk
+	[C]: at 0x00404b50
+Failed test when running /opt/luajit21/bin/luajit ffi_type_punning.lua 1: 256
+=== test/ffi/ffi_err.lua
+=== test/ffi/ffi_parse_array.lua
+/opt/luajit21/bin/luajit: ../common/ffi_util.inc:22: int __attribute__((aligned(8))) [10]
+stack traceback:
+	[C]: in function 'assert'
+	../common/ffi_util.inc:22: in function 'checktypes'
+	ffi_parse_array.lua:32: in main chunk
+	[C]: at 0x00404b50
+Failed test when running /opt/luajit21/bin/luajit ffi_parse_array.lua 1: 256
+=== test/ffi/ffi_const.lua
+=== test/ffi/ffi_meta_tostring.lua
+=== test/ffi/ffi_convert.lua
+/opt/luajit21/bin/luajit: ffi_convert.lua:142: failure expected
+stack traceback:
+	[C]: in function 'error'
+	../common/ffi_util.inc:27: in function 'fails'
+	ffi_convert.lua:142: in main chunk
+	[C]: at 0x00404b50
+Failed test when running /opt/luajit21/bin/luajit ffi_convert.lua 1: 256
+=== test/ffi/ffi_parse_cdef.lua
+=== test/ffi/ffi_jit_misc.lua
+=== test/ffi/ffi_call.lua
+=== test/ffi/ffi_jit_struct.lua
+=== test/ffi/ffi_arith_ptr.lua
+=== test/ffi/ffi_callback.lua
+=== test/ffi/ffi_metatype.lua
+=== test/ffi/ffi_jit_conv.lua
+=== test/ffi/ffi_jit_complex.lua
+=== test/ffi/ffi_jit_arith.lua
+=== test/ffi/ffi_copy_fill.lua
+=== test/ffi/ffi_jit_call.lua
+=== test/ffi/ffi_tabov.lua
+8 tests failed.
+```
+
+In case of test failures, the command will exit with a nonzero status code.
 
 Description
 ===========
@@ -51,6 +128,13 @@ On Fedora, for example, it is sufficient to install the dependencies using a sin
 
 ```bash
 sudo dnf install libmpc-devel gtk2-devel mpfr-devel gcc gcc-c++
+```
+
+Currently the `run-tests` script is written in Perl. So you may also need to install `perl` if your
+system does not have it already. For example, on Fedora, we can do
+
+```bash
+sudo dnf install perl
 ```
 
 Original Notes
