@@ -8,8 +8,10 @@ Table of Contents
 
 * [Name](#name)
 * [Synopsis](#synopsis)
+* [Description](#description)
 * [Prerequisites](#prerequisites)
-* [Original Notes](#original-notes)
+* [TODO](#todo)
+* [Original Notes from Mike Pall](#original-notes-from-mike-pall)
 
 Synopsis
 =========
@@ -143,8 +145,17 @@ system does not have it already. For example, on Fedora, we can do
 sudo dnf install perl
 ```
 
-Original Notes
-==============
+[Back to TOC](#table-of-contents)
+
+TODO
+====
+
+* Run the benchmark scripts as well.
+
+[Back to TOC](#table-of-contents)
+
+Original Notes from Mike Pall
+=============================
 
 In fact it doesn't even have the steps to build it or run it,
 so please don't complain.
