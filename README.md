@@ -138,7 +138,7 @@ Additionally, the valgrind test mode requires `valgrind`. On Fedora, we can inst
 sudo dnf install valgrind
 ```
 
-Currently the `run-tests` script is written in Perl. So you may also need to install `perl` if your
+Currently the `run-tests` script is written in Perl 5. So you may also need to install `perl` if your
 system does not have it already. For example, on Fedora, we can do
 
 ```bash
