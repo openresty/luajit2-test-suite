@@ -1,7 +1,7 @@
 Name
 ====
 
-luajit2-test-suite - OpenResty's branch of Mike Pall's LuaJIT test suite.
+luajit2-test-suite - OpenResty's branch of Mike Pall's LuaJIT 2 test suite.
 
 Table of Contents
 =================
@@ -21,6 +21,26 @@ Synopsis
 # run the test suite in valgrind test mode with luajit installed under /opt/luajit21sysm/
 ./run-tests.pl /opt/luajit21sysm 1
 ```
+
+When all the tests are passing, the output should look like this:
+
+```
+```
+
+Description
+===========
+
+This is a test suite for LuaJIT 2.1 based on Mike Pall's personal LuaJIT test suite first published here:
+
+https://github.com/LuaJIT/LuaJIT-test-cleanup
+
+We did not touch Mike's existing test files at all to make sure all the tests still test what they were
+originally supposed to test. There is always a big risk in editing Mike's tests since we cannot
+easily test those tests with a buggy LuaJIT version.
+
+This test suite is aimed for testing OpenResty's own branch of LuaJIT here:
+
+https://github.com/openresty/luajit2
 
 Prerequisites
 =============
