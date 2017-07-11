@@ -4,8 +4,19 @@ use v5.10.1;
 use strict;
 use warnings;
 
+use Getopt::Std qw( getopts );
 use Cwd qw( cwd );
 use File::Find;
+
+my %opts;
+getopts("hj:", \%opts) or usage(1);
+
+if ($opts{h}) {
+    usage(0);
+}
+
+my $jobs = $opts{j} // 1;
+$jobs += 0;
 
 my $luajit_prefix = shift or
     die "no luajit installation prefix specified.\n";
@@ -38,11 +49,12 @@ sub shell {
     }
 }
 
+my @tasks;
+
 sub wanted {
     return unless -f $_ && /\.lua$/;
     return if $_ eq 'ffi_arith_int64.lua';
-    warn "=== $File::Find::name\n";
-    shell("$luajit $_", 1);
+    push @tasks, [$File::Find::dir, $_];
 }
 
 shell "cd test/clib && rm -f ctest && gcc -O -g -o ctest -fpic -shared -I $luajit_inc ctest.c";
@@ -60,13 +72,96 @@ if ($? != 0) {
 chomp $cdefs;
 $ENV{CDEFS} = $cdefs;
 
-
 find({ wanted => \&wanted }, 'test');
 #find({ wanted => \&wanted }, 'bench');
 
-if ($failures) {
-    print "\e[31m$failures tests failed.\e[0m\n";
-    exit 1;
+my $each = @tasks / $jobs;
+if ($each < 1) {
+    $each = 1;
+    $jobs = scalar @tasks;
+}
+
+if ($jobs > 1) {
+    require Parallel::ForkManager;
+
+    my $pm = new Parallel::ForkManager($jobs);
+
+    my $fname = "FAILS.txt";
+    open my $out, ">$fname"
+        or die "failed to open $fname for writing; $!\n";
+    close $out;
+
+    for (my $group = 0; $group < $jobs; $group++) {
+        my $idx = $group * $each;
+
+        $pm->start and next; # do the fork
+
+        my $prev_dir;
+        for (my $i = 0; $i < $each; $i++) {
+            my $task = $tasks[$idx + $i];
+            my ($dir, $file) = @$task;
+            warn "=== $dir/$file\n";
+            if (!defined $prev_dir || $dir ne $prev_dir) {
+                chdir "$cwd/$dir" or die "chdir $cwd/$dir failed: $!";
+                $prev_dir = $dir;
+            }
+
+            shell("$luajit $file", 1);
+        }
+
+        open my $out, ">>$cwd/$fname"
+            or die "failed to open $fname for appending: $!\n";
+        print $out "$failures\n";
+        close $out;
+
+        $pm->finish; # do the exit in the child process
+    }
+
+    $pm->wait_all_children;
+
+    #warn "HERE: $failures";
+
+    open my $in, "$cwd/$fname"
+        or die "failed to open $fname for reading; $!\n";
+    while (<$in>) {
+        #warn "got: $_";
+        $failures += $_ + 0;
+    }
+    close $in;
+
 } else {
-    print "\e[32mAll tests successful.\e[0m\n";
+    my $prev_dir;
+    for my $task (@tasks) {
+        my ($dir, $file) = @$task;
+        warn "=== $dir/$file\n";
+        if (!defined $prev_dir || $dir ne $prev_dir) {
+            chdir "$cwd/$dir" or die "chdir $cwd/$dir failed: $!";
+            $prev_dir = $dir;
+        }
+        shell("$luajit $file", 1);
+    }
+}
+
+report($failures);
+
+sub report {
+    my $failures = shift;
+
+    if ($failures) {
+        print "\e[31m$failures tests failed.\e[0m\n";
+        exit 1;
+    } else {
+        print "\e[32mAll tests successful.\e[0m\n";
+    }
+}
+
+sub usage {
+    my $rc = shift;
+    my $msg = "usage: $0 [-j JOBS] <luajit-prefix> <use-valgrind>\n";
+    if ($rc == 0) {
+        print $msg;
+        exit 0;
+    }
+    print STDERR $msg;
+    exit $rc;
 }

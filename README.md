@@ -106,6 +106,19 @@ Failed test when running /opt/luajit21/bin/luajit ffi_convert.lua 1: 256
 
 In case of test failures, the command will exit with a nonzero status code.
 
+To run tests in multiple parallel jobs so as to utilize more than one CPU cores in your system, you can
+specify the `-j N` option where `N` is the number of jobs to run. For example, if you have 8 spare CPU
+logical cores in your system, you can run 8 parallel jobs like this:
+
+```
+./run-tests -j 8 /opt/luajit21sysm 1
+```
+
+The parallel jobs feature is very useful for the valgrind test mode. For example, on my Macbook Pro,
+`-j 8` makes the valgrind test mode more than 3x faster than `-j 1` (which is the default).
+On the other hand, for the normal mode, running the tests
+in multiple jobs actually would make the total running time longer.
+
 Description
 ===========
 
@@ -143,6 +156,20 @@ system does not have it already. For example, on Fedora, we can do
 
 ```bash
 sudo dnf install perl
+```
+
+If you want to run the tests in multiple parallel jobs, then you should also install the perl CPAN module
+`Parallel::ForkManager`. For example, on Fedora, we can install this module like this:
+
+```bash
+sudo dnf install perl-Parallel-ForkManager
+```
+
+If your operating system does not provide prebuilt package for this perl CPAN module, then you can install
+it via the `cpan` command-line utility like this:
+
+```bash
+sudo cpan Parallel::ForkManager
 ```
 
 [Back to TOC](#table-of-contents)
