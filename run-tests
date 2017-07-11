@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Copyright (C) Yichun Zhang. All rights reserved.
+# Licensed under the standard 2-clause BSD license.
+
 use v5.10.1;
 use strict;
 use warnings;
