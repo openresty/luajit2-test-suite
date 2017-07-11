@@ -179,7 +179,6 @@ TODO
 
 * Run the benchmark scripts as well.
 * Integrate as many tests as possible from ROC-Lua 5.1, 5.2, and 5.3.
-* Run tests faster by supporting the `-j N` option in the `run-tests` script by running tests in several parallel jobs.
 
 [Back to TOC](#table-of-contents)
 
