@@ -8,13 +8,21 @@ local function tostr(n)
   else return string.format("%+1.5g", n) end
 end
 
-local function check(f, expected)
+local function check(f, ...)
   local inp = inp
   local out = {}
   for i=1,#inp do out[i] = tostr(f(inp[i])) end
   local got = table.concat(out, " ")
-  if got ~= expected then
-    error("got: \""..got.."\"\nexpected: \""..expected.."\"", 2)
+  local hit
+  for i = 1, select('#', ...) do
+    local expected = select(i, ...)
+    if got == expected then
+        hit = true
+        break
+    end
+  end
+  if not hit then
+    error("got: \""..got.."\"\nexpected: \""..table.concat({...}, "\", \"").."\"", 2)
   end
 end
 
@@ -37,7 +45,7 @@ for j=1,#inp do
 end
 
 check(math.abs, "+0 +0 +0.5 +0.5 +1 +1 +inf +inf nan")
-check(math.floor, "+0 +0 +0 -1 +1 -1 +inf -inf nan")
+check(math.floor, "+0 +0 +0 -1 +1 -1 +inf -inf nan", "+0 -0 +0 -1 +1 -1 +inf -inf nan")
 check(math.ceil, "+0 +0 +1 +0 +1 -1 +inf -inf nan")
 check(math.sqrt, "+0 -0 +0.70711 nan +1 nan +inf nan nan")
 check(math.sin, "+0 -0 +0.47943 -0.47943 +0.84147 -0.84147 nan nan nan")
