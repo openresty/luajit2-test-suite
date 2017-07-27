@@ -21,7 +21,7 @@ Synopsis
 ./run-tests /opt/luajit21
 
 # run the test suite in valgrind test mode with luajit installed under /opt/luajit21sysm/
-./run-tests /opt/luajit21sysm 1
+./run-tests -v /opt/luajit21sysm
 ```
 
 When all the tests are passing, the output should look like this:
@@ -111,13 +111,25 @@ specify the `-j N` option where `N` is the number of jobs to run. For example, i
 logical cores in your system, you can run 8 parallel jobs like this:
 
 ```
-./run-tests -j 8 /opt/luajit21sysm 1
+./run-tests -v -j 8 /opt/luajit21sysm
 ```
 
 The parallel jobs feature is very useful for the valgrind test mode. For example, on my Macbook Pro,
 `-j 8` makes the valgrind test mode more than 3x faster than `-j 1` (which is the default).
 On the other hand, for the normal mode, running the tests
 in multiple jobs actually would make the total running time longer.
+
+To run a single test file, just specify the file path as an extra command-line argument, as in
+
+```
+./run-tests -v /opt/luajit21sysm test/misc/tnew_tdup.lua
+```
+
+and
+
+```
+./run-tests /opt/luajit21dbg test/unportable/math_special.lua
+```
 
 Description
 ===========
