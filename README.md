@@ -131,6 +131,12 @@ and
 ./run-tests /opt/luajit21dbg test/unportable/math_special.lua
 ```
 
+Multiple individual test files are also supported, as in
+
+```
+./run-tests /opt/luajit21dbg test/misc/*.lua
+```
+
 Description
 ===========
 

@@ -25,7 +25,6 @@ my $luajit_prefix = shift or
     die "no luajit installation prefix specified.\n";
 
 my $valgrind = $opts{v};
-my $test_file = shift;
 
 my $luajit = glob "$luajit_prefix/bin/luajit-2.1*";
 
@@ -76,15 +75,17 @@ if ($? != 0) {
 chomp $cdefs;
 $ENV{CDEFS} = $cdefs;
 
-if (defined $test_file) {
-    my ($dir, $fname);
-    if ($test_file =~ m{(.*)/(.*)}) {
-        ($dir, $fname) = ($1, $2);;
-    } else {
-        $dir = '.';
-        $fname = $test_file;
+if (@ARGV) {
+    for my $test_file (@ARGV) {
+        my ($dir, $fname);
+        if ($test_file =~ m{(.*)/(.*)}) {
+            ($dir, $fname) = ($1, $2);;
+        } else {
+            $dir = '.';
+            $fname = $test_file;
+        }
+        push @tasks, [$dir, $fname];
     }
-    push @tasks, [$dir, $fname];
 
 } else {
     find({ wanted => \&wanted }, 'test');
@@ -173,7 +174,7 @@ sub report {
 sub usage {
     my $rc = shift;
     my $msg = <<_EOC_;
-Usage: $0 [-h] [-v] [-j JOBS] LUAJIT-PREFIX [TEST-FILE]\n";
+Usage: $0 [-h] [-v] [-j JOBS] LUAJIT-PREFIX [TEST-FILE...]\n";
 
 Options:
     -h      Print this help.
