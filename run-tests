@@ -33,7 +33,7 @@ if (!$luajit || !-x $luajit) {
 }
 
 if ($valgrind) {
-    $luajit = "valgrind --num-callers=100 --leak-check=full --show-possibly-lost=no -q $luajit";
+    $luajit = "valgrind --error-exitcode=2 --num-callers=100 --leak-check=full --show-possibly-lost=no -q $luajit";
 }
 
 my $luajit_inc = "$luajit_prefix/include/luajit-2.1";
