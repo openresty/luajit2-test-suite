@@ -2,6 +2,7 @@
    <insert_a_suppression_name_here>
    Memcheck:Cond
    fun:lj_tab_newkey
+   fun:lj_tab_set
    fun:expr_table
    fun:expr_simple
    fun:expr_unop
@@ -19,9 +20,9 @@
    fun:lj_vm_cpcall
    fun:lua_loadx
    fun:luaL_loadfilex
+   fun:luaL_loadfile
    fun:handle_script
    fun:pmain
    fun:lj_BC_FUNCC
    fun:lua_cpcall
-   fun:main
 }
