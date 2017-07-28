@@ -32,8 +32,10 @@ if (!$luajit || !-x $luajit) {
     die "cannot find the luajit binary under $luajit_prefix/bin/";
 }
 
+my $cwd = cwd();
+
 if ($valgrind) {
-    $luajit = "valgrind --error-exitcode=2 --num-callers=100 --leak-check=full --show-possibly-lost=no -q $luajit";
+    $luajit = "valgrind --error-exitcode=2 --num-callers=100 --leak-check=full --show-possibly-lost=no --suppressions=$cwd/valgrind.suppress -q $luajit";
 }
 
 my $luajit_inc = "$luajit_prefix/include/luajit-2.1";
@@ -62,8 +64,6 @@ sub wanted {
 
 shell "cd test/clib && rm -f ctest && gcc -O -g -o ctest -fpic -shared -I $luajit_inc ctest.c";
 shell "cd test/clib && rm -f cpptest && g++ -O -g -o cpptest -fpic -shared -I $luajit_inc cpptest.cpp";
-
-my $cwd = cwd();
 
 $ENV{LUA_CPATH} = "$cwd/test/clib/?;;";
 
