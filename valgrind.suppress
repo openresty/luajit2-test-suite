@@ -26,3 +26,18 @@
    fun:lj_BC_FUNCC
    fun:lua_cpcall
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:lj_obj_equal
+   fun:lj_tab_get
+   fun:lj_meta_tget
+   fun:lj_vmeta_tgetv
+   fun:lua_pcall
+   fun:docall
+   fun:handle_script
+   fun:pmain
+   fun:lj_BC_FUNCC
+   fun:lua_cpcall
+   fun:main
+}
