@@ -41,3 +41,27 @@
    fun:lua_cpcall
    fun:main
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:lj_tab_newkey
+   fun:expr_table
+   fun:expr_binop
+   fun:expr_list
+   fun:parse_local
+   fun:parse_stmt
+   fun:parse_chunk
+   fun:parse_block
+   fun:parse_stmt
+   fun:parse_chunk
+   fun:lj_parse
+   fun:cpparser
+   fun:lj_vm_cpcall
+   fun:lua_loadx
+   fun:luaL_loadfilex
+   fun:handle_script
+   fun:pmain
+   fun:lj_BC_FUNCC
+   fun:lua_cpcall
+   fun:main
+}
