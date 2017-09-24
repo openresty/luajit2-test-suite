@@ -35,7 +35,7 @@ if (!$luajit || !-x $luajit) {
 my $cwd = cwd();
 
 if ($valgrind) {
-    $luajit = "valgrind --error-exitcode=2 --num-callers=100 --leak-check=full --show-possibly-lost=no --suppressions=$cwd/valgrind.suppress -q $luajit";
+    $luajit = "valgrind --gen-suppressions=all --error-exitcode=2 --num-callers=100 --leak-check=full --show-possibly-lost=no --suppressions=$cwd/valgrind.suppress -q $luajit";
 }
 
 my $luajit_inc = "$luajit_prefix/include/luajit-2.1";
