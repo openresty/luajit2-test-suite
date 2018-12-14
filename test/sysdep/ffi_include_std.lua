@@ -31,6 +31,13 @@ do
   local s = fp:read("*a")
   fp:close()
   os.remove("/tmp/__tmp.c")
+
+  -- TODO remove this workaround once LuaJIT supports _Float128 and _Complex _Float128
+  ffi.cdef[[
+    typedef long double _Float128;
+  ]]
+  s = s:gsub("_Complex _Float128 ", "_Complex long double ")
+
   ffi.cdef(s)
 end
 
