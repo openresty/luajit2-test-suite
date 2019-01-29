@@ -19,7 +19,7 @@ if os.getenv("LUA52") then
   check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
   check(math, "abs:acos:asin:atan:atan2:ceil:cos:cosh:deg:exp:floor:fmod:frexp:huge:ldexp:log:log10:max:min:modf:pi:pow:rad:random:randomseed:sin:sinh:sqrt:tan:tanh")
   check(string, "byte:char:dump:find:format:gmatch:gsub:len:lower:match:rep:reverse:sub:upper")
-  check(table, "concat:foreach:foreachi:getn:insert:maxn:pack:remove:sort:unpack")
+  check(table, "concat:foreach:foreachi:getn:insert:maxn:move:pack:remove:sort:unpack")
 else
   check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
   check(math, "abs:acos:asin:atan:atan2:ceil:cos:cosh:deg:exp:floor:fmod:frexp:huge:ldexp:log:log10:max:min:modf:pi:pow:rad:random:randomseed:sin:sinh:sqrt:tan:tanh")
@@ -39,7 +39,11 @@ else
   check(debug, "debug:getfenv:gethook:getinfo:getlocal:getmetatable:getregistry:getupvalue:setfenv:sethook:setlocal:setmetatable:setupvalue:traceback:upvalueid:upvaluejoin")
 end
 
-check(package, "config:cpath:loaded:loaders:loadlib:path:preload:seeall")
+if os.getenv("LUA52") then
+  check(package, "config:cpath:loaded:loaders:loadlib:path:preload:searchers:seeall")
+else
+  check(package, "config:cpath:loaded:loaders:loadlib:path:preload:seeall")
+end
 
 check(package.loaders, "1:2:3:4")
 package.loaded.bit = nil

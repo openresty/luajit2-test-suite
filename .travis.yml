@@ -35,13 +35,13 @@ install:
 script:
   - valgrind --version
   - cd ../luajit2
-  - make -j$JOBS CCDEBUG=-g Q= PREFIX=$LUAJIT_PREFIX CC=$CC XCFLAGS='-DLUA_USE_APICHECK -DLUA_USE_ASSERT -DLUAJIT_NUMMODE=2 -msse4.2 -O1' > build.log 2>&1 || (cat build.log && exit 1)
+  - make -j$JOBS CCDEBUG=-g Q= PREFIX=$LUAJIT_PREFIX CC=$CC XCFLAGS='-DLUAJIT_ENABLE_LUA52COMPAT -DLUA_USE_APICHECK -DLUA_USE_ASSERT -DLUAJIT_NUMMODE=2 -msse4.2 -O1' > build.log 2>&1 || (cat build.log && exit 1)
   - sudo make install PREFIX=$LUAJIT_PREFIX > build.log 2>&1 || (cat build.log && exit 1)
   - cd ../luajit2-test-suite
-  - ./run-tests -j $JOBS $LUAJIT_PREFIX
+  - LUA52=1 ./run-tests -j $JOBS $LUAJIT_PREFIX
   - cd ../luajit2
   - make clean
-  - make -j$JOBS CCDEBUG=-g Q= PREFIX=$LUAJIT_SYSM_PREFIX CC=$CC XCFLAGS='-DLUAJIT_NUMMODE=2 -DLUA_USE_APICHECK -DLUA_USE_ASSERT -DLUAJIT_USE_VALGRIND -DLUAJIT_USE_SYSMALLOC -O1 -msse4.2' > build.log 2>&1 || (cat build.log && exit 1)
+  - make -j$JOBS CCDEBUG=-g Q= PREFIX=$LUAJIT_SYSM_PREFIX CC=$CC XCFLAGS='-DLUAJIT_ENABLE_LUA52COMPAT -DLUAJIT_NUMMODE=2 -DLUA_USE_APICHECK -DLUA_USE_ASSERT -DLUAJIT_USE_VALGRIND -DLUAJIT_USE_SYSMALLOC -O1 -msse4.2' > build.log 2>&1 || (cat build.log && exit 1)
   - sudo make install PREFIX=$LUAJIT_SYSM_PREFIX > build.log 2>&1 || (cat build.log && exit 1)
   - cd ../luajit2-test-suite
-  - ./run-tests -j $JOBS -v $LUAJIT_SYSM_PREFIX
+  - LUA52=1 ./run-tests -j $JOBS -v $LUAJIT_SYSM_PREFIX

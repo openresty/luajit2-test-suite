@@ -5,6 +5,12 @@ dofile("../common/ffi_util.inc")
 do
   local fp = assert(io.open("/tmp/__tmp.c", "w"))
   fp:write[[
+#define _Float32 float
+#define _Float32x float
+#define _Float64 double
+#define _Float64x double
+#define _Float128 long double
+
 #include <sqlite3.h>
 #include <thread_db.h>
 #include <resolv.h>
