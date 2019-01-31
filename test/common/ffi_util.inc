@@ -36,6 +36,7 @@ function include(name)
   local fp = assert(io.popen("cc -E -P "..flags.." "..cdefs.." "..name))
   local s = fp:read("*a")
   fp:close()
+  s = s:gsub("__float128", "double")
   ffi.cdef(s)
 end
 

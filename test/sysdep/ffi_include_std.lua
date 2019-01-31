@@ -5,6 +5,8 @@ dofile("../common/ffi_util.inc")
 do
   local fp = assert(io.open("/tmp/__tmp.c", "w"))
   fp:write[[
+#define __float128 double
+
 #define _Float32 float
 #define _Float32x float
 #define _Float64 double
