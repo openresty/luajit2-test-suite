@@ -1,3 +1,8 @@
+-- Test file to demonstrate Lua table hash chain bugs discussed in
+--     https://github.com/LuaJIT/LuaJIT/issues/494
+-- Credit: prepared by Peter Cawley here with minor edits:
+--     https://gist.github.com/corsix/1fc9b13a2dd5f3659417b62dd54d4500
+
 --- Plumbing
 local ffi = require"ffi"
 ffi.cdef"char* strstr(const char*, const char*)"
