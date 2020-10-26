@@ -28,8 +28,8 @@ if jit and jit.arch == "x64" then
     for i=1,100 do assert(ud1 ~= ud2) end
   end
   assert(tostring(lightud(0x5abc*2^32 + 0xdef01234)) == "userdata: 0x5abcdef01234")
-  assert(pcall(lightud, 2^47) == false)
-  assert(pcall(lightud, 2^64-2048) == false)
+  assert(tostring(lightud(2^47 + 1)) == "userdata: 0x800000000001")
+  assert(tostring(lightud(2^59 - 42)) == "userdata: 0x07ffffffffffffc0")
 end
 
 assert(getmetatable(lightud(1)) == nil)
