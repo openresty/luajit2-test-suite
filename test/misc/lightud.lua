@@ -31,6 +31,8 @@ if jit and jit.arch == "x64" then
   assert(tostring(lightud(2^47)) == "userdata: 0x800000000000")
   assert(tostring(lightud(2^64-2048)) == "userdata: 0x8000000000000000")
   -- assert(pcall(lightud, 2^64-2048) == false)
+  assert(tostring(lightud(2^47 + 1)) == "userdata: 0x800000000001")
+  assert(tostring(lightud(2^59 - 42)) == "userdata: 0x07ffffffffffffc0")
 end
 
 assert(getmetatable(lightud(1)) == nil)
