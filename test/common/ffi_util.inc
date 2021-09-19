@@ -3,6 +3,7 @@
 -- functionality turned off, if the FFI module is not built-in.
 
 local ffi = require("ffi")
+local jit = require("jit")
 
 function checkfail(t, f)
   f = f or ffi.typeof
@@ -31,12 +32,23 @@ local incroot = os.getenv("INCROOT") or "/usr/include"
 local cdefs = os.getenv("CDEFS") or ""
 
 function include(name)
-  local flags = ffi.abi("32bit") and "-m32" or "-m64"
+  local flags
+  if jit.arch == "arm64" then
+    flags = ""
+  else
+    flags = ffi.abi("32bit") and "-m32" or "-m64"
+  end
+  flags = ""
   if string.sub(name, 1, 1) ~= "/" then name = incroot.."/"..name end
   local fp = assert(io.popen("cc -E -P "..flags.." "..cdefs.." "..name))
   local s = fp:read("*a")
   fp:close()
   s = s:gsub("__float128", "double")
+  s = s:gsub("__uint128_t", "unsigned long long")
+  s = s:gsub("__attribute__%s*%(%s*%(%s*__deprecated__%s*%([^)]+%)%s*%)%s*%)", "")
+  s = s:gsub("__attribute__%s*%(%s*%(%s*__deprecated__%s*%)%s*%)", "")
+  s = s:gsub("#pragma%s+[^\n]*", "")
+  -- io.stderr:write("code: " .. s)
   ffi.cdef(s)
 end
 

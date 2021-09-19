@@ -80,6 +80,7 @@ if ($? != 0) {
 }
 chomp $cdefs;
 $ENV{CDEFS} = $cdefs;
+#warn "CDEFS=$cdefs";
 
 if (@ARGV) {
     for my $test_file (@ARGV) {

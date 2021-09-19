@@ -1,4 +1,5 @@
 local ffi = require("ffi")
+local jit = require("jit")
 
 dofile("../common/ffi_util.inc")
 
@@ -34,11 +35,17 @@ do
 ]]
   fp:close()
 
-  local flags = ffi.abi("32bit") and "-m32" or "-m64"
+  local flags
+  if jit.arch == "arm64" then
+    flags = ""
+  else
+    flags = ffi.abi("32bit") and "-m32" or "-m64"
+  end
   fp = assert(io.popen("cc -E -P -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE /tmp/__tmp.c "..flags))
   local s = fp:read("*a")
   fp:close()
   os.remove("/tmp/__tmp.c")
+  s = s:gsub("__uint128_t", "unsigned long long")
   ffi.cdef(s)
 end
 
