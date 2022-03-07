@@ -1,5 +1,5 @@
-local clone = require"table.clone"
-local nkeys = require"table.nkeys"
+local clone = require "table.clone"
+local nkeys = require "table.nkeys"
 local c, n
 local t = {idx = 0}
 
