@@ -40,9 +40,9 @@ else
 end
 
 if os.getenv("LUA52") then
-  check(package, "config:cpath:loaded:loaders:loadlib:path:preload:searchers:seeall")
+  check(package, "config:cpath:key_sentinel:loaded:loaders:loadlib:path:preload:searchers:seeall")
 else
-  check(package, "config:cpath:loaded:loaders:loadlib:path:preload:seeall")
+  check(package, "config:cpath:key_sentinel:loaded:loaders:loadlib:path:preload:seeall")
 end
 
 check(package.loaders, "1:2:3:4")
