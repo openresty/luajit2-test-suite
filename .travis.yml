@@ -35,7 +35,7 @@ env:
   - LUAJIT_XCFLAGS="-DLUAJIT_USE_GC64 -DLUAJIT_ENABLE_LUA52COMPAT $LUAJIT_COMMON_XCFLAGS" LUA52=1
 
 install:
-  - git clone -b merge20221209 https://github.com/openresty/luajit2.git ../luajit2
+  - git clone -b merge1209 https://github.com/openresty/luajit2.git ../luajit2
 
 script:
   - valgrind --version
