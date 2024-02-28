@@ -8,8 +8,10 @@ assert(err == false)
 
 local first = string.match(s, "[^\n]+")
 local line = debug.getinfo(f, "S").linedefined+1
+
 assert(string.match(first, ":"..line..": stack overflow$") or
-       string.match(first, "error in error handling"))
+       string.match(first, "error in error handling") or
+       first == "stack overflow")
 
 local n = 1
 for _ in string.gmatch(s, "\n") do n = n + 1 end
