@@ -9,6 +9,7 @@ assert(err == false)
 local first = string.match(s, "[^\n]+")
 local line = debug.getinfo(f, "S").linedefined+1
 
+print("[[" .. first .. "]]")
 assert(string.match(first, ":"..line..": stack overflow$") or
        string.match(first, "error in error handling") or
        first == "stack overflow")
