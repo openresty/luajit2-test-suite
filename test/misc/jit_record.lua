@@ -1,4 +1,4 @@
-require "jit.opt".start("hotloop=2", "hotexit=1", "maxsnap=9")
+if jit and jit.opt then jit.opt.start("hotloop=2", "hotexit=1", "maxsnap=9") end
 
 local m = 1
 
