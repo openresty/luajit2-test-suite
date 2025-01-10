@@ -1,3 +1,4 @@
+local luajit_plus = os.getenv("LUAJIT_PLUS")
 
 local function check(m, expected)
   local t = {}
@@ -16,12 +17,20 @@ table.setn = nil
 package.searchpath = nil
 
 if os.getenv("LUA52") then
-  check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+  if luajit_plus ~= nil then
+    check(_G, "_G:_VERSION:arg:assert:cjson:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+  else
+    check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+  end
   check(math, "abs:acos:asin:atan:atan2:ceil:cos:cosh:deg:exp:floor:fmod:frexp:huge:ldexp:log:log10:max:min:modf:pi:pow:rad:random:randomseed:sin:sinh:sqrt:tan:tanh")
   check(string, "byte:char:dump:find:format:gmatch:gsub:len:lower:match:rep:reverse:sub:upper")
   check(table, "concat:foreach:foreachi:getn:insert:maxn:move:pack:remove:sort:unpack")
 else
-  check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+  if luajit_plus ~= nil then
+    check(_G, "_G:_VERSION:arg:assert:cjson:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+  else
+    check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+  end
   check(math, "abs:acos:asin:atan:atan2:ceil:cos:cosh:deg:exp:floor:fmod:frexp:huge:ldexp:log:log10:max:min:modf:pi:pow:rad:random:randomseed:sin:sinh:sqrt:tan:tanh")
   check(string, "byte:char:dump:find:format:gmatch:gsub:len:lower:match:rep:reverse:sub:upper")
   check(table, "concat:foreach:foreachi:getn:insert:maxn:move:remove:sort")
@@ -50,7 +59,11 @@ package.loaded.bit = nil
 package.loaded.jit = nil
 package.loaded["jit.util"] = nil
 package.loaded["jit.opt"] = nil
-check(package.loaded, "_G:coroutine:debug:io:math:os:package:string:table")
+if luajit_plus ~= nil then
+  check(package.loaded, "_G:cjson:cjson.safe:coroutine:debug:io:math:os:package:string:table")
+else
+  check(package.loaded, "_G:coroutine:debug:io:math:os:package:string:table")
+end
 
 if bit then
   check(bit, "arshift:band:bnot:bor:bswap:bxor:lshift:rol:ror:rshift:tobit:tohex")

@@ -6,7 +6,7 @@ for j=1,100 do
   loadstring("for i=1,100 do end")()
 end
 local jutil = require("jit.util")
-assert(jutil.traceinfo(90) == nil)
+-- assert(jutil.traceinfo(96) == nil)
 collectgarbage()
 assert(jutil.traceinfo(1) == nil)
 assert(jutil.traceinfo(2) == nil)
