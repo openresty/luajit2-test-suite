@@ -18,7 +18,7 @@ package.searchpath = nil
 
 if os.getenv("LUA52") then
   if luajit_plus ~= nil then
-    check(_G, "_G:_VERSION:arg:assert:cjson:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
+    check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
   else
     check(_G, "_G:_VERSION:arg:assert:collectgarbage:coroutine:debug:dofile:error:gcinfo:getfenv:getmetatable:io:ipairs:load:loadfile:loadstring:math:module:newproxy:next:os:package:pairs:pcall:print:rawequal:rawget:rawlen:rawset:require:select:setfenv:setmetatable:string:table:tonumber:tostring:type:unpack:xpcall")
   end
@@ -60,7 +60,7 @@ package.loaded.jit = nil
 package.loaded["jit.util"] = nil
 package.loaded["jit.opt"] = nil
 if luajit_plus ~= nil then
-  check(package.loaded, "_G:cjson:cjson.safe:coroutine:debug:io:math:os:package:string:table")
+  check(package.loaded, "_G:coroutine:debug:io:jit.cjson:jit.cjson.safe:math:os:package:string:table")
 else
   check(package.loaded, "_G:coroutine:debug:io:math:os:package:string:table")
 end
