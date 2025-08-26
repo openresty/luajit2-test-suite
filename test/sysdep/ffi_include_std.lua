@@ -46,6 +46,8 @@ do
   fp:close()
   os.remove("/tmp/__tmp.c")
   s = s:gsub("__uint128_t", "unsigned long long")
+  s = s:gsub("__s128", "int64_t")
+  s = s:gsub("%[__restrict[^%]]*%]", "")
   ffi.cdef(s)
 end
 
