@@ -81,7 +81,7 @@ end
 
 do
   if not (ffi.os == "Windows" or ffi.os == "Other") then
-    ffi.load("pthread")
+    ffi.load("c")
   end
 end
 
