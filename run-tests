@@ -181,13 +181,15 @@ sub report {
 sub usage {
     my $rc = shift;
     my $msg = <<_EOC_;
-Usage: $0 [-h] [-v] [-j JOBS] LUAJIT-PREFIX [TEST-FILE...]\n";
+Usage: $0 [-h] [-v] [-j JOBS] LUAJIT-PREFIX LUAJIT CC CXX [TEST-FILE...]\n";
 
 Options:
     -h      Print this help.
     -j N    Run tests in N parallel jobs, utilizing multiple
             CPU cores.
     -v      Use Valgrind to run the tests.
+
+eg:  ./run-tests /opt/luajit21-test "/opt/luajit21-test/bin/luajit" "gcc" "g++" ./test/misc/catch_wrap.lua
 _EOC_
     if ($rc == 0) {
         print $msg;
